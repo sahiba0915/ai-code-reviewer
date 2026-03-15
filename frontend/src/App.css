@@ -1,42 +1,176 @@
-#root {
-  max-width: 1280px;
+/* App layout – clean, readable structure */
+
+.app {
+  width: 100%;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  text-align: left;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-header {
+  margin-bottom: 2rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.app-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+}
+
+.app-header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.app-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Code input section */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* CodeEditor – large textarea */
+.code-editor {
+  width: 100%;
+  min-height: 320px;
+  padding: 1rem;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.code-editor:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.code-editor::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.code-editor:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Review button */
+.review-button {
+  align-self: flex-start;
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #646cff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.review-button:hover:not(:disabled) {
+  background-color: #535bf2;
+}
+
+.review-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Result section */
+.result-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.review-result {
+  min-height: 120px;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
+.review-result--error {
+  border-color: #c44;
+}
+
+.review-result-placeholder,
+.review-result-error {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.review-result-error {
+  color: #f88;
+}
+
+.review-result-text {
+  margin: 0;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-color-scheme: light) {
+  .app-header p {
+    color: rgba(0, 0, 0, 0.7);
   }
-  to {
-    transform: rotate(360deg);
+
+  .code-editor {
+    color: #213547;
+    background-color: #f5f5f5;
+    border-color: #ccc;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .code-editor:focus {
+    border-color: #646cff;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .code-editor::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+  }
 
-.read-the-docs {
-  color: #888;
+  .review-result {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+  }
+
+  .review-result--error {
+    border-color: #c44;
+  }
+
+  .review-result-placeholder {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .review-result-error {
+    color: #c22;
+  }
+
+  .review-result-text {
+    color: #213547;
+  }
 }
