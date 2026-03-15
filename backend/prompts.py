@@ -6,16 +6,32 @@ def build_review_prompt(code: str) -> str:
     review instructions without touching the API or LLM client code.
     """
 
-    template = """You are a senior software engineer performing a code review.
+    template = """You are a senior software engineer performing a concise, actionable code review.
 
-Analyze the following code and provide:
-- Bugs
-- Performance issues
-- Best practices
-- Refactoring suggestions
+Analyze the code below and respond with clear sections. For each finding, state the issue and a concrete fix when possible. Use this structure:
 
-Code:
+## Bugs & correctness
+- List potential bugs, logic errors, or edge cases (e.g. null/zero, empty input). Say how to fix each.
+
+## Security & robustness
+- Input validation, injection risks, error handling, or unsafe assumptions.
+
+## Performance
+- Inefficient patterns, unnecessary work, or better algorithms. Be specific.
+
+## Style & best practices
+- Naming, readability, DRY violations, or language/framework best practices.
+
+## Refactoring suggestions
+- Short, actionable improvements (extract function, simplify condition, etc.).
+
+Keep each bullet brief (1–2 sentences). If a section has nothing to report, write "None." Do not repeat the code; only comment on it.
+
+Code to review:
+
+```
 {code}
+```
 """
     return template.format(code=code)
 
