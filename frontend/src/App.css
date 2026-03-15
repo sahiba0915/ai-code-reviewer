@@ -1,39 +1,53 @@
-/* App layout – clean, readable structure */
+/* App layout – centered chat-style surface */
 
 .app {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem 2rem 2rem;
   text-align: left;
 }
 
 .app-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
 }
 
 .app-header h1 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.4rem;
   font-size: 2rem;
+  letter-spacing: 0.02em;
+  color: #e5e7eb;
 }
 
 .app-header p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
+  color: rgba(148, 163, 184, 0.96);
+  font-size: 0.9rem;
 }
 
 .app-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: flex-start;
 }
 
-/* Code input section */
+@media (max-width: 960px) {
+  .app-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Code input section – left column */
 .input-section {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0.85rem 0.95rem 0.95rem;
+  border-radius: 18px;
+  background-color: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(30, 41, 59, 0.9);
 }
 
 .input-toolbar {
@@ -60,22 +74,23 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(226, 232, 240, 0.78);
 }
 
 .language-select {
-  padding: 0.4rem 0.6rem;
+  padding: 0.4rem 0.75rem;
   font-size: 0.9rem;
-  border: 1px solid #333;
-  border-radius: 6px;
-  background-color: #1a1a1a;
-  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  border-radius: 999px;
+  background-color: rgba(15, 23, 42, 0.95);
+  color: rgba(226, 232, 240, 0.96);
   cursor: pointer;
 }
 
 .language-select:focus {
   outline: none;
-  border-color: #646cff;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.7);
 }
 
 .language-select:disabled {
@@ -93,31 +108,38 @@
 }
 
 .upload-button {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.9rem;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #444;
-  border-radius: 6px;
+  background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.4), rgba(30, 64, 175, 0.5));
+  color: #e5e7eb;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: background-color 0.16s ease-out, border-color 0.16s ease-out, transform 0.03s ease-out,
+    box-shadow 0.08s ease-out;
 }
 
 .upload-button:hover:not(:disabled) {
-  background-color: #444;
-  border-color: #555;
+  background: radial-gradient(circle at top left, rgba(191, 219, 254, 0.5), rgba(30, 64, 175, 0.8));
+  border-color: rgba(191, 219, 254, 0.9);
+  transform: translateY(-0.5px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.75);
 }
 
 .upload-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .section-title {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(148, 163, 184, 0.9);
 }
 
 /* CodeEditor – large textarea */
@@ -127,149 +149,263 @@
   padding: 1rem;
   font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
   font-size: 0.9rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.9);
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.97);
+  background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(51, 65, 85, 0.95);
+  border-radius: 14px;
   resize: vertical;
   box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
 }
 
 .code-editor:focus {
   outline: none;
-  border-color: #646cff;
+  border-color: #4f46e5;
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 23, 42, 0.9),
+    0 0 0 1px rgba(79, 70, 229, 0.65);
 }
 
 .code-editor::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(148, 163, 184, 0.7);
 }
 
 .code-editor:disabled {
-  opacity: 0.7;
+  opacity: 0.75;
   cursor: not-allowed;
 }
 
 /* Review button */
 .review-button {
   align-self: flex-start;
-  padding: 0.65rem 1.25rem;
-  font-size: 1rem;
+  margin-top: 0.25rem;
+  padding: 0.68rem 1.4rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  background-color: #646cff;
-  color: #fff;
+  background: linear-gradient(120deg, #4f46e5, #22c55e);
+  color: #f9fafb;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: transform 0.04s ease-out, box-shadow 0.1s ease-out, filter 0.12s ease-out;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.82);
 }
 
 .review-button:hover:not(:disabled) {
-  background-color: #535bf2;
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.92);
 }
 
 .review-button:disabled {
-  opacity: 0.7;
+  opacity: 0.8;
   cursor: not-allowed;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.75);
 }
 
-/* Result section */
+/* Result section – chat-style */
+/* Result section – right column chat */
 .result-section {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0.85rem 0.9rem 0.9rem;
+  border-radius: 18px;
+  background-color: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(30, 41, 59, 0.9);
+  max-height: calc(70vh);
+  overflow-y: auto;
 }
 
-.review-result {
-  min-height: 120px;
-  padding: 1rem;
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0.25rem 0.25rem;
+  max-height: 420px;
+  overflow-y: auto;
 }
 
-.review-result--error {
-  border-color: #c44;
+.chat-message {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: flex-start;
+  gap: 0.75rem;
 }
 
-.review-result-placeholder,
-.review-result-error {
+.chat-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: radial-gradient(circle at 20% 0%, #22c55e, #16a34a);
+  color: #ecfdf5;
+  box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.8);
+}
+
+.chat-avatar--system {
+  background: radial-gradient(circle at 20% 0%, #4b5563, #111827);
+  color: #e5e7eb;
+  box-shadow: 0 0 0 1px rgba(75, 85, 99, 0.9);
+}
+
+.chat-bubble {
+  position: relative;
+  padding: 0.75rem 0.9rem;
+  border-radius: 16px;
+  background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.99));
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.92);
+}
+
+.chat-message--assistant .chat-bubble {
+  border-left: 3px solid #22c55e;
+}
+
+.chat-message--system .chat-bubble {
+  border-left: 3px solid rgba(148, 163, 184, 0.8);
+}
+
+.chat-message--error .chat-bubble {
+  border-left-color: #f97373;
+  border-color: rgba(127, 29, 29, 0.95);
+  background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 1));
+}
+
+.chat-text {
   margin: 0;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.review-result-error {
-  color: #f88;
-}
-
-.review-result-text {
-  margin: 0;
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
   font-size: 0.9rem;
-  line-height: 1.6;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.98);
+}
+
+.chat-text--mono {
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
   white-space: pre-wrap;
   word-break: break-word;
-  color: rgba(255, 255, 255, 0.9);
+}
+
+.chat-text--error {
+  color: #fecaca;
+}
+
+.chat-typing-dots {
+  display: inline-flex;
+  margin-left: 0.35rem;
+  gap: 0.2rem;
+}
+
+.chat-typing-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background-color: rgba(148, 163, 184, 0.9);
+  animation: chat-bounce 1.2s infinite ease-in-out;
+}
+
+.chat-typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.chat-typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.chat-message--loading .chat-bubble {
+  opacity: 0.95;
+}
+
+@keyframes chat-bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
 }
 
 @media (prefers-color-scheme: light) {
+  .app {
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 55%),
+      radial-gradient(circle at top right, rgba(16, 185, 129, 0.16), transparent 55%),
+      #f9fafb;
+    border-color: rgba(209, 213, 219, 0.9);
+    box-shadow:
+      0 18px 60px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(148, 163, 184, 0.2);
+  }
+
   .app-header p {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(75, 85, 99, 0.96);
   }
 
   .language-label {
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(55, 65, 81, 0.92);
   }
 
   .language-select {
-    border-color: #ccc;
-    background-color: #f5f5f5;
-    color: #213547;
+    border-color: rgba(209, 213, 219, 0.9);
+    background-color: #f9fafb;
+    color: #111827;
   }
 
   .upload-button {
-    background-color: #e0e0e0;
-    border-color: #ccc;
-    color: #213547;
+    background: radial-gradient(circle at top left, rgba(191, 219, 254, 0.8), rgba(37, 99, 235, 0.85));
+    border-color: rgba(129, 140, 248, 0.9);
+    color: #0f172a;
   }
 
   .upload-button:hover:not(:disabled) {
-    background-color: #d0d0d0;
-    border-color: #bbb;
+    background: radial-gradient(circle at top left, rgba(219, 234, 254, 1), rgba(37, 99, 235, 0.95));
+    border-color: rgba(79, 70, 229, 0.95);
   }
 
   .code-editor {
-    color: #213547;
-    background-color: #f5f5f5;
-    border-color: #ccc;
+    color: #0f172a;
+    background: #f9fafb;
+    border-color: rgba(209, 213, 219, 0.95);
+    box-shadow:
+      inset 0 0 0 1px rgba(226, 232, 240, 0.9),
+      0 0 0 1px rgba(148, 163, 184, 0.25);
   }
 
   .code-editor:focus {
-    border-color: #646cff;
+    border-color: #4f46e5;
   }
 
   .code-editor::placeholder {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(148, 163, 184, 0.95);
   }
 
-  .review-result {
-    background-color: #f5f5f5;
-    border-color: #ccc;
+  .chat-bubble {
+    background: #ffffff;
+    border-color: rgba(209, 213, 219, 0.95);
+    box-shadow:
+      0 10px 30px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(226, 232, 240, 0.8);
   }
 
-  .review-result--error {
-    border-color: #c44;
+  .chat-message--error .chat-bubble {
+    border-color: rgba(220, 38, 38, 0.88);
+    border-left-color: rgba(220, 38, 38, 1);
+    background: #fff7f7;
   }
 
-  .review-result-placeholder {
-    color: rgba(0, 0, 0, 0.6);
+  .chat-text {
+    color: #111827;
   }
 
-  .review-result-error {
-    color: #c22;
-  }
-
-  .review-result-text {
-    color: #213547;
+  .chat-text--error {
+    color: #b91c1c;
   }
 }
