@@ -52,9 +52,8 @@ def review_code_endpoint(payload: CodeInput) -> dict:
             detail="Ollama took too long to respond. Try again or use a smaller code snippet.",
         )
     except requests.exceptions.HTTPError as e:
-        status = e.response.status_code if e.response is not None else 502
         msg = "Ollama error."
-        if e.response is not None and status == 404:
+        if e.response is not None and e.response.status_code == 404:
             msg = "Model 'llama3' not found. Run 'ollama run llama3' to download it."
         raise HTTPException(status_code=503, detail=msg)
     except Exception as e:
