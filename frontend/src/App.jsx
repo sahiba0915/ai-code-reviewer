@@ -70,19 +70,22 @@ function App() {
             <div className="toolbar-controls">
               <label className="language-label">
                 Language
-                <select
-                  className="language-select"
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  disabled={isLoading}
-                  aria-label="Code language"
-                >
-                  {LANGUAGE_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
+                <span className="language-select-wrapper">
+                  <select
+                    className="language-select"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    disabled={isLoading}
+                    aria-label="Code language"
+                  >
+                    {LANGUAGE_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="language-select-chevron" aria-hidden="true" />
+                </span>
               </label>
               <input
                 ref={fileInputRef}
