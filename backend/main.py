@@ -22,6 +22,7 @@ class CodeInput(BaseModel):
     """Request body schema for code review requests."""
 
     code: str
+    language: str | None = None
 
 
 @app.get("/")
@@ -38,7 +39,7 @@ def review_code_endpoint(payload: CodeInput) -> dict:
     Ollama model, and return the AI-generated review text.
     """
     try:
-        prompt = build_review_prompt(payload.code)
+        prompt = build_review_prompt(payload.code, payload.language)
         review_text = review_code(prompt)
         return {"review": review_text}
     except requests.exceptions.ConnectionError:

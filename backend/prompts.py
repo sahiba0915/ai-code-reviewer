@@ -1,14 +1,16 @@
-def build_review_prompt(code: str) -> str:
+def build_review_prompt(code: str, language: str | None = None) -> str:
     """
     Build a detailed prompt instructing the LLM to perform a thorough code review.
 
     Keeping this logic in a dedicated module makes it easy to iterate on the
     review instructions without touching the API or LLM client code.
     """
+    language_note = ""
+    if language and language.lower() not in ("auto", ""):
+        language_note = f" The code is {language}. Apply {language} conventions and best practices where relevant.\n\n"
 
     template = """You are a senior software engineer performing a concise, actionable code review.
-
-Analyze the code below and respond with clear sections. For each finding, state the issue and a concrete fix when possible. Use this structure:
+{language_note}Analyze the code below and respond with clear sections. For each finding, state the issue and a concrete fix when possible. Use this structure:
 
 ## Bugs & correctness
 - List potential bugs, logic errors, or edge cases (e.g. null/zero, empty input). Say how to fix each.
@@ -33,5 +35,5 @@ Code to review:
 {code}
 ```
 """
-    return template.format(code=code)
+    return template.format(language_note=language_note, code=code)
 
