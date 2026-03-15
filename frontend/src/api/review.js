@@ -7,16 +7,20 @@ const REVIEW_API_URL = 'http://localhost:8000/review-code'
 /**
  * Request an AI code review from the backend.
  * @param {string} code - Source code to review
+ * @param {string} [language] - Optional language hint (e.g. "Python", "JavaScript")
  * @returns {Promise<{ review: string }>}
  * @throws {Error} On network or server error
  */
-export async function submitCodeForReview(code) {
+export async function submitCodeForReview(code, language = null) {
+  const body = { code }
+  if (language && language !== 'auto') body.language = language
+
   const response = await fetch(REVIEW_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ code }),
+    body: JSON.stringify(body),
   })
 
   if (!response.ok) {
