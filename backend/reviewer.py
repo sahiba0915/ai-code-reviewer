@@ -19,7 +19,8 @@ def review_code(prompt: str) -> str:
         "stream": False,
     }
 
-    response = requests.post(OLLAMA_URL, json=payload, timeout=60)
+    # Llama3 can be slow on CPU; allow up to 3 minutes for the first token + full response
+    response = requests.post(OLLAMA_URL, json=payload, timeout=180)
     response.raise_for_status()
 
     data = response.json()

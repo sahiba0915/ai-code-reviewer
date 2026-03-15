@@ -1,10 +1,30 @@
 import { useState } from 'react'
+import CodeEditor from './components/CodeEditor'
+import ReviewButton from './components/ReviewButton'
+import ReviewResult from './components/ReviewResult'
+import { submitCodeForReview } from './api/review'
 import './App.css'
 
 function App() {
-  // Local state to hold the pasted source code and the review result.
   const [code, setCode] = useState('')
-  const [reviewResult, setReviewResult] = useState('')
+  const [review, setReview] = useState('')
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  async function handleReviewCode() {
+    setError(null)
+    setReview('')
+    setIsLoading(true)
+
+    try {
+      const data = await submitCodeForReview(code)
+      setReview(data.review ?? '')
+    } catch (err) {
+      setError(err.message || 'Failed to get review. Is the backend running at http://localhost:8000?')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <main className="app">
@@ -15,34 +35,28 @@ function App() {
 
       <section className="app-content">
         <div className="input-section">
-          <label htmlFor="code-input" className="section-title">
-            Code
+          <label htmlFor="code-editor" className="section-title">
+            Code Input
           </label>
-          <textarea
-            id="code-input"
-            className="code-textarea"
+          <CodeEditor
             value={code}
-            onChange={(e) => setCode(e.target.value)}
-            placeholder="Paste your code here..."
-            rows={14}
+            onChange={setCode}
+            disabled={isLoading}
           />
-          <button
-            type="button"
-            className="review-button"
-            onClick={() => {
-              // Integration with the backend will be implemented later.
-              setReviewResult('Review will appear here once the backend is connected.')
-            }}
-          >
-            Review
-          </button>
+          <ReviewButton
+            onClick={handleReviewCode}
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
         </div>
 
         <div className="result-section">
-          <h2 className="section-title">Review Result</h2>
-          <div className="result-box">
-            {reviewResult || 'No review yet.'}
-          </div>
+          <h2 className="section-title">AI Review Result</h2>
+          <ReviewResult
+            review={review}
+            error={error}
+            isLoading={isLoading}
+          />
         </div>
       </section>
     </main>
