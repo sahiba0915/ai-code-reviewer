@@ -1,16 +1,82 @@
-# React + Vite
+# AI Code Reviewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI Code Reviewer lets you paste or upload code and get an AI‑generated review using a local Ollama model (default: `llama3`) via a simple chat‑style UI.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Node.js** (LTS recommended) for the frontend.
+- **Python 3.10+** for the backend.
+- **Ollama** installed and running locally:
+  - Install from `https://ollama.ai`
+  - Pull the model used by this app:
 
-## React Compiler
+    ```bash
+    ollama run llama3
+    ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+  - Make sure the Ollama server is listening on `http://localhost:11434` (default).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Backend – FastAPI + Ollama
+
+```bash
+cd backend
+pip install -r requirements.txt
+
+# Run the API
+uvicorn main:app --reload
+```
+
+The API will be available at `http://localhost:8000`.
+
+## Frontend – React + Vite
+
+From the repo root:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+By default Vite runs at `http://localhost:5173`.
+
+The frontend expects the backend at `http://localhost:8000` and is CORS‑enabled for `localhost:5173`.
+
+---
+
+## How to use the app
+
+1. **Start Ollama**
+
+   Make sure Ollama is running and the `llama3` model is available:
+
+   ```bash
+   ollama run llama3
+   ```
+
+2. **Run the backend**
+
+   ```bash
+   cd backend
+   uvicorn main:app --reload
+   ```
+
+3. **Run the frontend**
+
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+4. **Open the UI**
+
+   Visit `http://localhost:5173` in your browser.
+
+5. **Get a review**
+
+   - Paste code into the editor **or** click **Upload file** and choose a source file.
+   - Optionally pick a **Language** to guide the review.
+   - Click **Review Code** and read the AI’s structured feedback on the right.
