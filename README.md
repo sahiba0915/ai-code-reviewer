@@ -2,6 +2,19 @@
 
 AI Code Reviewer lets you paste or upload code and get an AI‑generated review using a local Ollama model (default: `llama3`) via a simple chat‑style UI.
 
+## AI Model Architecture
+
+This project uses a local Large Language Model (LLM) to analyze code and generate review suggestions.  
+The model runs locally using Ollama with models such as `llama3`.
+
+Using a local model provides several advantages:
+
+- **Privacy:** Source code stays on the developer’s machine and is not sent to external APIs.
+- **No API Costs:** The system does not depend on paid AI services.
+- **Offline Capability:** Once the model is downloaded, the tool can run without internet access.
+
+The architecture is designed to be **model-agnostic**, meaning the local model can be replaced with a hosted LLM API in production environments if needed.
+
 ## Prerequisites
 
 - **Node.js** (LTS recommended) for the frontend.
@@ -80,3 +93,9 @@ The frontend expects the backend at `http://localhost:8000` and is CORS‑enable
    - Paste code into the editor **or** click **Upload file** and choose a source file.
    - Optionally pick a **Language** to guide the review.
    - Click **Review Code** and read the AI’s structured feedback on the right.
+
+# Note: 
+
+The AI engine runs locally using Ollama to support offline inference 
+and avoid external API costs. The system can be deployed by replacing 
+the local model with a hosted LLM API.
