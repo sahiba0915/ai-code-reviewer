@@ -93,9 +93,3 @@ The frontend expects the backend at `http://localhost:8000` and is CORS‑enable
    - Paste code into the editor **or** click **Upload file** and choose a source file.
    - Optionally pick a **Language** to guide the review.
    - Click **Review Code** and read the AI’s structured feedback on the right.
-
-# Note: 
-
-The AI engine runs locally using Ollama to support offline inference 
-and avoid external API costs. The system can be deployed by replacing 
-the local model with a hosted LLM API.
