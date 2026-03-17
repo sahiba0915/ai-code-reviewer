@@ -3,8 +3,14 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from prompts import build_review_prompt
-from reviewer import review_code
+try:
+    from prompts import build_review_prompt  # type: ignore
+    from reviewer import review_code, review_structured  # type: ignore
+    from schema import CodeReviewResult  # type: ignore
+except ModuleNotFoundError:
+    from backend.prompts import build_review_prompt  # type: ignore
+    from backend.reviewer import review_code, review_structured  # type: ignore
+    from backend.schema import CodeReviewResult  # type: ignore
 
 
 app = FastAPI(title="AI Code Reviewer")
@@ -42,6 +48,29 @@ def review_code_endpoint(payload: CodeInput) -> dict:
         prompt = build_review_prompt(payload.code, payload.language)
         review_text = review_code(prompt)
         return {"review": review_text}
+    except requests.exceptions.ConnectionError:
+        raise HTTPException(
+            status_code=503,
+            detail="Ollama is not running. Start it with 'ollama serve', then run 'ollama run llama3'.",
+        )
+    except requests.exceptions.Timeout:
+        raise HTTPException(
+            status_code=504,
+            detail="Ollama took too long to respond. Try again or use a smaller code snippet.",
+        )
+    except requests.exceptions.HTTPError as e:
+        msg = "Ollama error."
+        if e.response is not None and e.response.status_code == 404:
+            msg = "Model 'llama3' not found. Run 'ollama run llama3' to download it."
+        raise HTTPException(status_code=503, detail=msg)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/review-structured", response_model=CodeReviewResult)
+def review_structured_endpoint(payload: CodeInput) -> CodeReviewResult:
+    try:
+        return review_structured(code=payload.code, language=payload.language, file_label="pasted_code")
     except requests.exceptions.ConnectionError:
         raise HTTPException(
             status_code=503,
